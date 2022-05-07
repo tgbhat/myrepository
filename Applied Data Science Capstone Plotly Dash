@@ -59,13 +59,11 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
 def get_pie_chart(entered_site):
     filtered_df = spacex_df
     if entered_site == 'ALL':
-        fig = px.pie(data, values = 'class', 
-        names = 'pie chart names', 
-        title = 'title')
+        fig = px.pie(data, values = 'class', names = 'pie chart names', title = 'title')
         return fig
     else:
         selected_site = spacex_df.loc[spacex_df['Launch Site'] == entered_site]
-        fig = px.pie(data_frame = selected_site, names = 'class', title = 'Outcomes for a Selected Site')
+        fig = px.pie(selected_site, names = 'class', title = 'Outcomes for a Selected Site')
         return fig
 # TASK 4:
 # Add a callback function for `site-dropdown` and `payload-slider` as inputs, `success-payload-scatter-chart` as output
@@ -75,17 +73,13 @@ def get_pie_chart(entered_site):
 
 def get_scatter_graph(entered_site, slider):
     if entered_site == 'ALL':
-        data = spacex_df[(spacex_df['Payload Mass (kg)'] >= slider[0])
-        &(spacex_df['Payload Mass (kg)'] <= slider[1])]
-        plot = px.scatter(data_frame = data, x = 'Payload Mass (kg)', y = 'class', 
-        color = 'Booster Version Category')
+        data = spacex_df[(spacex_df['Payload Mass (kg)'] >= slider[0])&(spacex_df['Payload Mass (kg)'] <= slider[1])]
+        plot = px.scatter(data, x = 'Payload Mass (kg)', y = 'class', color = 'Booster Version Category')
         return plot
     else:
         selected_site = spacex_df.loc[spacex_df['Launch Site'] == entered_site]
-        data = selected_site[(selected_site['Payload Mass (kg)'] >= slider[0])
-        &(spacex_df['Payload Mass (kg)'] <= slider[1])]
-        plot = px.scatter(data_frame = data, x = 'Payload Mass (kg)', y = 'class', 
-        color = 'Booster Version Category')
+        data = selected_site[(selected_site['Payload Mass (kg)'] >= slider[0])&(spacex_df['Payload Mass (kg)'] <= slider[1])]
+        plot = px.scatter(data, x = 'Payload Mass (kg)', y = 'class', color = 'Booster Version Category')
         return plot
 # Run the app
 if __name__ == '__main__':
