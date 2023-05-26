@@ -1,0 +1,20 @@
+proc import out = oil_data
+datafile="/home/u59288733/STAT668/Crude Oil Time Data.xlsx"
+dbms=xlsx
+replace;
+getnames=YES;
+run;
+
+/*Cointegration and Dickey-Fuller Tests*/
+proc varmax data = oil_data;
+model oil_price dj_close cpi / p=1 dftest cointtest=(johansen);
+run;
+
+/*Multivariate Time Series Analysis*/
+proc varmax data = oil_data;
+model oil_price dj_close /p=1;
+run;
+
+proc varmax data = oil_data;
+model oil_price cpi /p=1;
+run;
