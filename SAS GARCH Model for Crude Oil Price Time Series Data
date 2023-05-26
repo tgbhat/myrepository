@@ -6,7 +6,8 @@ replace;
 getnames=YES;
 run;
 
-data Crude_Oil_Price2; /*converted date into date format numeric variable */
+/*Convert date into date format numeric variable */
+data Crude_Oil_Price2; 
 set Crude_Oil_Price;
 date = substr(date,1,10);
 modified_date = input(date,yymmdd10.);
@@ -15,12 +16,14 @@ drop date;
 rename modified_date = date;
 run;
 
-data Crude_Oil_Price3; /*rearrange the order of columns*/
+/*Rearrange the order of columns*/
+data Crude_Oil_Price3; 
 retain date price percentChange change;
 set Crude_Oil_Price2;
 run;
 
-proc autoreg data=Crude_Oil_Price3; /*GARCH model*/
+/*GARCH model*/
+proc autoreg data=Crude_Oil_Price3; 
 model price= / nlag = 1
 garch=(p=1,q=1);
 run;
