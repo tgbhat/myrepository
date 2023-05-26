@@ -1,0 +1,26 @@
+/*GARCH Model for oil price time series data*/
+proc import out=Crude_Oil_Price
+datafile="/home/u59288733/Projects/Crude Oil Price Data.xlsx"
+dbms=xlsx
+replace;
+getnames=YES;
+run;
+
+data Crude_Oil_Price2; /*converted date into date format numeric variable */
+set Crude_Oil_Price;
+date = substr(date,1,10);
+modified_date = input(date,yymmdd10.);
+format modified_date yymmdd10.;
+drop date;
+rename modified_date = date;
+run;
+
+data Crude_Oil_Price3; /*rearrange the order of columns*/
+retain date price percentChange change;
+set Crude_Oil_Price2;
+run;
+
+proc autoreg data=Crude_Oil_Price3; /*GARCH model*/
+model price= / nlag = 1
+garch=(p=1,q=1);
+run;
