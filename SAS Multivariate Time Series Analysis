@@ -1,3 +1,4 @@
+/*SAS code for multivariate time series analysis of crude oil price, CPI, and Dow Jones stock price*/
 proc import out = oil_data
 datafile="/home/u59288733/STAT668/Crude Oil Time Data.xlsx"
 dbms=xlsx
