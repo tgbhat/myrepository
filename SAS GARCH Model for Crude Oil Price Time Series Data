@@ -1,4 +1,4 @@
-/*GARCH Model for oil price time series data*/
+/*SAS code for GARCH model of crude oil price time series data*/
 proc import out=Crude_Oil_Price
 datafile="/home/u59288733/Projects/Crude Oil Price Data.xlsx"
 dbms=xlsx
